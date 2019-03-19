@@ -17,18 +17,19 @@ app.use(express.static('./'));
 
 //test route
 //form of a route: app.METHOD(PATH, CALLBACK)
-app.get('/testing', (request, response) => {
-  console.log ('Hit the testing route!');
-  let caity = {firstName: 'Caity', lastName: 'Heath', awesome: true};
-  response.json(caity);
-});
+// app.get('/testing', (request, response) => {
+//   console.log ('Hit the testing route!');
+//   let caity = {firstName: 'Caity', lastName: 'Heath', awesome: true};
+//   response.json(caity);
+// });
 
 app.get('/location', (request, response) => {
-  // const locationData = searchToLatLong(request.query.data);
-  console.log(request);
-  console.log(request.query);
-  console.log(request.query.data);
-  response.send(locationData);
+  const locationData = searchToLatLong(request.query.data);
+  // console.log(request);
+  // console.log(request.query);
+  // console.log(request.query.data);
+  // response.send(locationData);
+  response.json(locationData);
 });
 
 app.use('*', (req, res) => res.send('That route does not exist'));
@@ -39,4 +40,16 @@ app.listen(PORT, () => console.log (`listening on PORT ${PORT}`));
 
 //HELPER FUNCTIONS
 
-// function searchToLatLong(
+function searchToLatLong(entry) {
+  const geoData = require('./data/geo.json');
+  const location = new Location(geoData);
+  location.search_query = entry; // adding new property to location object, because we want the search term to be attached to its data
+  // console.log(geoData);
+  return location;
+}
+
+function Location(data) {
+  this.latitude = data.results[0].geometry.location.lat;
+  this.longitude = data.results[0].geometry.location.lng;
+  this.formatted_query = data.results[0].formatted_address;
+}
