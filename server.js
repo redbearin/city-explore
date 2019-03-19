@@ -22,12 +22,14 @@ app.get('/testing', (request, response) => {
 });
 
 app.get('/location', (request, response) => {
-  const locationData = searchToLatLong(request.query.data);
+  // const locationData = searchToLatLong(request.query.data);
   console.log(request);
   console.log(request.query);
   console.log(request.query.data);
   response.send(locationData);
 });
+
+app.use('*', (req, res) => res.send('That route does not exist'));
 
 //Turn the server on so it will listen for incoming requests
 app.listen(PORT, () => console.log (`listening on PORT ${PORT}`));
@@ -35,4 +37,4 @@ app.listen(PORT, () => console.log (`listening on PORT ${PORT}`));
 
 //HELPER FUNCTIONS
 
-function searchToLatLong(
+// function searchToLatLong(
