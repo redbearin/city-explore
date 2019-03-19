@@ -13,6 +13,8 @@ app.use(cors());
 
 const PORT = process.env.PORT;
 
+app.use(express.static('./'));
+
 //test route
 //form of a route: app.METHOD(PATH, CALLBACK)
 app.get('/testing', (request, response) => {
