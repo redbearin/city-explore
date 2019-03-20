@@ -20,7 +20,8 @@ Software packages in use: node.js, npm
 Node modules in use: express, cors, dotenv
 
 ## Change Log
-2019-03-19 10:20 AM - Application has a functional express server with GET route for invalid routes
+2019-03-19 10:20 - Application has a functional express server with GET route for invalid routes
+2019-03-19 18:20 - Weather function complete, error function complete
 
 ## Credits and Collaborations
 Collaborator - Jesse Van Volkinburg
