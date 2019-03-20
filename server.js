@@ -21,6 +21,11 @@ app.get('/location', (request, response) => {
   response.json(locationData);
 });
 
+app.get('/weather', (request, response) => {
+  const weatherArray = getWeather(request.query.data);
+  response.json(weatherArray);
+});
+
 app.use('*', (req, res) => res.send('That route does not exist'));
 
 //Turn the server on so it will listen for incoming requests
@@ -43,8 +48,22 @@ function searchToLatLong(entry) {
   return location;
 }
 
+function getWeather() {
+  const weatherData = require('./data/darksky.json');
+  let weatherSummary = [];
+  weatherData.daily.data.forEach(day => {
+    weatherSummary.push(new Weather(day));
+  });
+  return weatherSummary;
+}
+
 function Location(data) {
   this.latitude = data.results[0].geometry.location.lat;
   this.longitude = data.results[0].geometry.location.lng;
   this.formatted_query = data.results[0].formatted_address;
+}
+
+function Weather(day) {
+  this.forecast = day.summary;
+  this.time = new Date(day.time * 1000).toString.slice(15);
 }
